@@ -10,6 +10,8 @@ import path from "path";                // Built-in Node.js module for working w
 import { fileURLToPath } from "url";     // Convert file URL to file path
 import multer from "multer";
 import { register } from "./controllers/auth.js";
+import userRoutes from "./routes/users.js";
+import {authRoutes} from "./routes/auth.js";
 /* CONFIGURATION */
 
 // Get the current file's path using import.meta.url
@@ -66,6 +68,14 @@ const upload = multer({ storage });
 // Define a POST route for user registration at "/auth/register".
 // It uses the multer middleware to handle file uploads for the "picture" field and passes the uploaded file to the "register" handler.
 app.post("/auth/register",upload.signal("picture"),register);
+
+
+
+app.use('/auth',authRoutes);
+
+
+
+app.use('/user',userRoutes);
 
 // Define the port number for the server, using the provided PORT environment variable or defaulting to 6001
 const PORT = process.env.PORT || 6001;
